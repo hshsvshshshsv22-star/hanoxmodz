@@ -450,10 +450,10 @@ function enterApp(sessionData) {
 
 /* ============================
    EXPORT HOOKS (dùng bởi wardrobe-app.js)
-   window.fishCheckExport  → kiểm tra trước khi xuất
-   window.fishChargeExport → trừ 1 ngày sau khi xuất xong
+   window.hanoxCheckExport  → kiểm tra trước khi xuất
+   window.hanoxChargeExport → trừ 1 ngày sau khi xuất xong
    ============================ */
-window.fishCheckExport = async function(count) {
+window.hanoxCheckExport = async function(count) {
   if (!_session) throw new Error('Chưa đăng nhập. Hãy nhập key.');
   if (_session.expiresAt && _session.expiresAt <= Math.floor(Date.now() / 1000))
     throw new Error('Key đã hết hạn. Vui lòng gia hạn.');
@@ -463,7 +463,7 @@ window.fishCheckExport = async function(count) {
   return { id: 'modff-' + crypto.randomUUID(), user: _session.key, count: Number(count) || 1, local: false };
 };
 
-window.fishChargeExport = async function(ticket) {
+window.hanoxChargeExport = async function(ticket) {
   if (!ticket) throw new Error('Phiên xuất không hợp lệ.');
   if (!_session) throw new Error('Mất phiên đăng nhập.');
 
@@ -547,3 +547,7 @@ window.fishChargeExport = async function(ticket) {
   // Hiện màn hình login
   buildLoginUI();
 })();
+
+// Alias tương thích ngược
+window.fishCheckExport = window.hanoxCheckExport;
+window.fishChargeExport = window.hanoxChargeExport;
