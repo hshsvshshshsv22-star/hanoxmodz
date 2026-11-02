@@ -21,6 +21,11 @@ const SESSION_KEY   = 'modff_key_session';
 const DEVICE_ID_KEY = 'modff_device_id';
 
 /* ============================
+   MASTER KEY (chỉ bạn biết) — vô hạn điểm
+   ============================ */
+const MASTER_KEY = 'HANOXADR-IOSCHEAT';
+
+/* ============================
    HELPERS
    ============================ */
 const safeGet = k => { try { return localStorage.getItem(k); } catch { return null; } };
@@ -83,6 +88,18 @@ async function getDB() {
 async function verifyAndActivateKey(rawKey) {
   const key = String(rawKey || '').trim().toUpperCase();
   if (!key) throw new Error('Vui lòng nhập Key.');
+
+  // Master key: chỉ bạn biết — vô hạn điểm, không qua Firebase
+  if (key === MASTER_KEY) {
+    return {
+      key: MASTER_KEY,
+      days: LIFETIME_DAYS,
+      daysLeft: LIFETIME_DAYS,
+      expiresAt: 0,
+      tier: 'VIP',
+    };
+  }
+
   if (!/^[A-Z0-9]+-[A-Z0-9]{6}-[A-Z0-9]{6}$/.test(key))
     throw new Error('Định dạng Key không hợp lệ.');
 
@@ -173,6 +190,11 @@ async function verifyAndActivateKey(rawKey) {
    Mỗi lần xuất → trừ 1 ngày (1 điểm)
    ============================ */
 async function chargeOneDay(keyStr) {
+  // Master key: không trừ điểm
+  if (String(keyStr || '').toUpperCase() === MASTER_KEY) {
+    return { ok: true, daysLeft: LIFETIME_DAYS };
+  }
+
   const db = await getDB();
   const docRef = db.collection('keys').doc(keyStr);
 
@@ -482,6 +504,17 @@ window.fishChargeExport = async function(ticket) {
 
   const sess = loadSession();
   if (sess) {
+    // Master key: luôn chấp nhận, không cần Firebase
+    if (sess.key === MASTER_KEY) {
+      sess.days = LIFETIME_DAYS;
+      sess.daysLeft = LIFETIME_DAYS;
+      sess.expiresAt = 0;
+      saveSession(sess);
+      _session = sess;
+      enterApp(sess);
+      return;
+    }
+
     // Xác minh online nhanh
     try {
       const db = await getDB();
