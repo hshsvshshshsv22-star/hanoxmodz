@@ -547,7 +547,3 @@ window.hanoxChargeExport = async function(ticket) {
   // Hiện màn hình login
   buildLoginUI();
 })();
-
-// Alias tương thích ngược
-window.fishCheckExport = window.hanoxCheckExport;
-window.fishChargeExport = window.hanoxChargeExport;

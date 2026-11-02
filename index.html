@@ -324,7 +324,7 @@ self.onmessage=async event=>{
   const bundle=await pack(base,patch,compressed,p=>postMessage({id,progress:p}));postMessage({id,progress:80});
   const [os,game]=version.split('-');
   const folder=os==='android'?(game==='max'?'com.dts.freefiremax':'com.dts.freefireth')+'/files/contentcache/Optional/android/optionalavatarres/gameassetbundles/':'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/';
-  const zip=fflate.zipSync({[folder+base.bundleName]:bundle,['Bản quyền mod thuộc về HANOX MOD Z - MOD SKIN FF.TXT']:decode('QuG6o24gcXV54buBbiBtb2QgdGh14buZYyB24buBIEZJU0ggTU9EIFogLSBNT0QgU0tJTiBGRiA=')},{level:0});
+  const zip=fflate.zipSync({[folder+base.bundleName]:bundle,['Bản quyền mod thuộc về HANOX MOD Z - MOD SKIN FF.TXT']:decode('QuG6o24gcXV54buBbiBtb2QgdGh14buZYyB24buBIEhBTk9YIE1PRCBaIC0gTU9EIFNLSU4gRkY=')},{level:0});
   postMessage({id,result:zip.buffer},[zip.buffer]);
  }catch(error){postMessage({id,error:error.message||String(error)});}
 };
@@ -395,7 +395,7 @@ self.onmessage=async event=>{
 <script id="alok-download-package">(() => {
  const prefixes={'android-normal':'HANOX MOD Z ALOK THỨC TỈNH ADR FFTH','android-max':'HANOX MOD Z ALOK THỨC TỈNH ADR FFM','ios-normal':'HANOX MOD Z ALOK THỨC TỈNH IOS FFTH','ios-max':'HANOX MOD Z ALOK THỨC TỈNH IOS FFM'};
  const copyrightName="Bản quyền mod thuộc về HANOX MOD Z - MOD SKIN FF.TXT";
- const copyrightBytes=Uint8Array.from(atob("QuG6o24gcXV54buBbiBtb2QgdGh14buZYyB24buBIEZJU0ggTU9EIFogLSBNT0QgU0tJTiBGRiA="),c=>c.charCodeAt(0));
+ const copyrightBytes=Uint8Array.from(atob("QuG6o24gcXV54buBbiBtb2QgdGh14buZYyB24buBIEhBTk9YIE1PRCBaIC0gTU9EIFNLSU4gRkY="),c=>c.charCodeAt(0));
  const usedCodes=new Set();
  let lastCode;try{lastCode=localStorage.getItem("alok-last-export-code");}catch{}
  window.alokPackageDownload=(bytes,version)=>{
