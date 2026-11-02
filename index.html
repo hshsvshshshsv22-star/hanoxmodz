@@ -172,7 +172,8 @@ window.alokLoadPayload=async function(url,total,progress,signal){
 };
 let exportReady;
 window.alokEnsureExport=(progress,signal)=>exportReady||(exportReady=window.alokLoadPayload(["./export-f5626d75adfe-0.bin", "./export-f5626d75adfe-1.bin"],30708227,progress,signal).then(d=>{const a=window.alokWardrobe.assets;a.mixEngine.compressed=d.compressed;a.downloads=d.downloads;}).catch(e=>{exportReady=null;throw e;}));
-window.alokBoot=window.alokLoadPayload('./wardrobe-b6178fca57b6.gz',5789396,p=>{document.getElementById('preview-message').textContent='Đang tải trang phục… '+p+'%';}).then(a=>{window.__alokPackedAssets=a;return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='./wardrobe-app.js';s.onload=resolve;s.onerror=reject;document.body.append(s);});}).then(()=>{const s=document.createElement('script');s.src='./wardrobe-preview.js?v=20261011-perf1';document.body.append(s);}).catch(e=>{document.getElementById('preview-message').textContent='Không tải được trang phục: '+e.message;});
+window.alokBoot(=window.alokLoadPayload('./wardrobe-b6178fca57b6.gz',5789396,p=>{document.getElementById('preview-message').textContent='Đang tải trang phục… '+p+'%';}).then(a=>{window.__alokPackedAssets=a;return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='./wardrobe-app.js';s.onload=resolve;s.onerror=reject;document.body.append(s);});}).then(()=>{const s=document.createElement('script');s.src='./wardrobe-preview.js?v=20261011-perf1';document.body.append(s);}).catch(e=>{document.getElementById('preview-message').textContent='Không tải được trang phục: '+e.message;});
+window.alokBoot();
 </script>
 
 <!-- Export dependencies, MIT licenses:
