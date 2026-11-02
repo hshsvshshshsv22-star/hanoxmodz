@@ -70,18 +70,28 @@ THE SOFTWARE.
 
 
 <style>.hanox-top-actions{display:flex;align-items:center;gap:16px}.hanox-nav{position:relative}.hanox-menu-toggle{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text)}.hanox-menu{position:absolute;right:0;top:50px;width:180px;z-index:50;padding:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 35px #0008}.hanox-menu[hidden]{display:none}.hanox-menu a{display:block;padding:12px;border-radius:7px}.hanox-menu a:hover{background:#302b40}@media(max-width:500px){.hanox-top-actions .platform{display:none}.brand{font-size:10px;letter-spacing:1px}}</style><script defer src="./hanox-menu.js"></script><script defer src="./hanox-auth-return.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-functions-compat.js"></script><script defer src="./firebase-config.js"></script><script defer src="./hanox-export-points.js"></script><link rel="stylesheet" href="./category-icons.css"><link rel="stylesheet" href="./item-picker.css"><script defer src="./item-picker.js?v=20261011-1347"></script></head>
+<script defer src="./hanox-export-points.js"></script><link rel="stylesheet" href="./category-icons.css"><link rel="stylesheet" href="./item-picker.css"><script defer src="./item-picker.js?v=20261011-1347"></script></head>
 <body>
   <div class="shell">
     <header class="topbar">
-      <a class="brand" href="#" aria-label="Trang chủ Alok"><span class="brandmark">A</span> HANOX MOD Z / WARDROBE</a>
-      <div class="hanox-top-actions"><div class="platform"><span class="dot"></span> <span id="platform-label">Chọn phiên bản</span></div><div class="hanox-nav"><button id="hanox-menu-toggle" class="hanox-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="hanox-menu"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav id="hanox-menu" class="hanox-menu" aria-label="Menu chính" hidden><a href="./account.html">Tài khoản / SERVER KEY</a><a href="./earn.html">Hướng dẫn xuất</a><a href="https://t.me/modskinff0">Báo lỗi</a></nav></div></div>
+      <a class="brand" href="#" aria-label="Trang chủ Alok"><span class="brandmark">🎭</span> HANOX MOD Z / WARDROBE</a>
+      <div class="hanox-top-actions"><div class="platform"><span class="dot"></span> <span id="platform-label">Chọn phiên bản</span></div><div class="hanox-nav"><button id="modff-logout-btn" type="button" title="Đăng xuất" 
+  style="display:none;padding:6px 12px;border:1px solid #3a3a55;border-radius:8px;background:#1b1b26;color:#b29aff;font-size:12px;cursor:pointer"
+  onclick="(()=>{try{localStorage.removeItem('modff_key_session');}catch{}location.reload();})()"
+  >🔑 Đăng xuất</button>
+<button id="hanox-menu-toggle" class="hanox-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="hanox-menu"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav id="hanox-menu" class="hanox-menu" aria-label="Menu chính" hidden><a href="./account.html">Chế độ chạy</a><a href="./earn.html">Hướng dẫn xuất</a><a href="https://t.me/modskinff0">Báo lỗi</a></nav></div></div>
     </header>
 
 
 
     <div class="intro" id="wardrobe-intro">
-      <div><p class="eyebrow">PHỐI ĐỒ NHÂN VẬT</p><h1 id="hanox-mod-turns" aria-live="polite">Đang tải lượt mod…</h1></div>
+      <div>
+  <p class="eyebrow">PHỐI ĐỒ NHÂN VẬT</p>
+  <h1 id="hanox-mod-turns" aria-live="polite">Đang xác thực key…</h1>
+  <p id="hanox-points-note" style="color:#c5ee87;font-size:12px;margin:4px 0 0;display:none">
+    💡 Mỗi lần xuất file tốn 1 ngày (1 điểm). Key theo ngày.
+  </p>
+</div>
       <span class="count">Android · Free Fire thường</span>
     </div>
     <main class="workspace" id="wardrobe-workspace">
@@ -90,7 +100,7 @@ THE SOFTWARE.
         <div class="stage-head"><span class="character-name">ALOK</span><span class="badge" id="preview-badge">XEM 3D</span></div>
         <div id="viewport">
           <span class="watermark" aria-hidden="true">ALOK</span>
-          <img id="fallback" alt="Alok mặc bộ trang phục đang chọn">
+          <img id="fallback" alt="Alok mặc bộ trang phục đang chọn" onerror="this.style.display='none'">
           <div id="preview-message" class="preview-message" role="status">Đang mở Alok… Nếu khung xem trước không chạy, hãy tải file xuống và mở bằng Chrome hoặc Edge.</div>
         </div>
         <div class="stage-footer">
@@ -112,14 +122,14 @@ THE SOFTWARE.
             <option value="ios-max">iOS · FF MAX</option>
           </select></div></div>
           <div class="form-divider"></div>
-          <div class="form-row"><label for="hair"><img class="row-icon category-icon" src="./assets/category-icons/hair.webp" alt="" aria-hidden="true" width="32" height="32">Tóc</label><div class="select-wrap"><select id="hair" name="hair"></select></div></div>
-          <div class="form-row"><label for="top"><img class="row-icon category-icon" src="./assets/category-icons/top.webp" alt="" aria-hidden="true" width="32" height="32">Áo</label><div class="select-wrap"><select id="top" name="top"></select></div></div>
-          <div class="form-row"><label for="bottom"><img class="row-icon category-icon" src="./assets/category-icons/bottom.webp" alt="" aria-hidden="true" width="32" height="32">Quần</label><div class="select-wrap"><select id="bottom" name="bottom"></select></div></div>
-          <div class="form-row"><label for="shoes"><img class="row-icon category-icon" src="./assets/category-icons/shoes.webp" alt="" aria-hidden="true" width="32" height="32">Chân</label><div class="select-wrap"><select id="shoes" name="shoes"></select></div></div>
-          <div class="form-row"><label for="mask"><img class="row-icon category-icon" src="./assets/category-icons/mask.webp" alt="" aria-hidden="true" width="32" height="32">Nạ</label><div class="select-wrap"><select id="mask" name="mask"></select></div></div>
-          <div class="form-row"><label for="face"><img class="row-icon category-icon" src="./assets/category-icons/face.webp" alt="" aria-hidden="true" width="32" height="32">Mặt</label><div class="select-wrap"><select id="face" name="face"></select></div></div>
+          <div class="form-row"><label for="hair"><img class="row-icon category-icon" src="./assets/category-icons/hair.webp" alt="" aria-hidden="true" width="32" height="32" onerror="this.style.display='none';this.parentNode.insertBefore(Object.assign(document.createElement('span'),{textContent:'💇',style:'font-size:22px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center'}),this)">Tóc</label><div class="select-wrap"><select id="hair" name="hair"></select></div></div>
+          <div class="form-row"><label for="top"><img class="row-icon category-icon" src="./assets/category-icons/top.webp" alt="" aria-hidden="true" width="32" height="32" onerror="this.style.display='none';this.parentNode.insertBefore(Object.assign(document.createElement('span'),{textContent:'👕',style:'font-size:22px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center'}),this)">Áo</label><div class="select-wrap"><select id="top" name="top"></select></div></div>
+          <div class="form-row"><label for="bottom"><img class="row-icon category-icon" src="./assets/category-icons/bottom.webp" alt="" aria-hidden="true" width="32" height="32" onerror="this.style.display='none';this.parentNode.insertBefore(Object.assign(document.createElement('span'),{textContent:'👖',style:'font-size:22px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center'}),this)">Quần</label><div class="select-wrap"><select id="bottom" name="bottom"></select></div></div>
+          <div class="form-row"><label for="shoes"><img class="row-icon category-icon" src="./assets/category-icons/shoes.webp" alt="" aria-hidden="true" width="32" height="32" onerror="this.style.display='none';this.parentNode.insertBefore(Object.assign(document.createElement('span'),{textContent:'👟',style:'font-size:22px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center'}),this)">Chân</label><div class="select-wrap"><select id="shoes" name="shoes"></select></div></div>
+          <div class="form-row"><label for="mask"><img class="row-icon category-icon" src="./assets/category-icons/mask.webp" alt="" aria-hidden="true" width="32" height="32" onerror="this.style.display='none';this.parentNode.insertBefore(Object.assign(document.createElement('span'),{textContent:'🎭',style:'font-size:22px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center'}),this)">Nạ</label><div class="select-wrap"><select id="mask" name="mask"></select></div></div>
+          <div class="form-row"><label for="face"><img class="row-icon category-icon" src="./assets/category-icons/face.webp" alt="" aria-hidden="true" width="32" height="32" onerror="this.style.display='none';this.parentNode.insertBefore(Object.assign(document.createElement('span'),{textContent:'😊',style:'font-size:22px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center'}),this)">Mặt</label><div class="select-wrap"><select id="face" name="face"></select></div></div>
           <div class="form-divider"></div>
-          <div class="form-row"><label for="action"><img class="row-icon category-icon" src="./assets/category-icons/action.webp" alt="" aria-hidden="true" width="32" height="32">Hành động</label><div class="select-wrap"><select id="action" name="action"></select></div></div>
+          <div class="form-row"><label for="action"><img class="row-icon category-icon" src="./assets/category-icons/action.webp" alt="" aria-hidden="true" width="32" height="32" onerror="this.style.display='none';this.parentNode.insertBefore(Object.assign(document.createElement('span'),{textContent:'⚡',style:'font-size:22px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center'}),this)">Hành động</label><div class="select-wrap"><select id="action" name="action"></select></div></div>
         </form>
         <div class="mix-tools"><button id="randomize" type="button">⇄ Phối ngẫu nhiên</button><button id="reset" type="button">Bộ mặc định</button></div>
         <div class="download-area">
@@ -163,7 +173,6 @@ window.alokLoadPayload=async function(url,total,progress,signal){
 let exportReady;
 window.alokEnsureExport=(progress,signal)=>exportReady||(exportReady=window.alokLoadPayload(["./export-f5626d75adfe-0.bin", "./export-f5626d75adfe-1.bin"],30708227,progress,signal).then(d=>{const a=window.alokWardrobe.assets;a.mixEngine.compressed=d.compressed;a.downloads=d.downloads;}).catch(e=>{exportReady=null;throw e;}));
 window.alokBoot=window.alokLoadPayload('./wardrobe-b6178fca57b6.gz',5789396,p=>{document.getElementById('preview-message').textContent='Đang tải trang phục… '+p+'%';}).then(a=>{window.__alokPackedAssets=a;return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='./wardrobe-app.js';s.onload=resolve;s.onerror=reject;document.body.append(s);});}).then(()=>{const s=document.createElement('script');s.src='./wardrobe-preview.js?v=20261011-perf1';document.body.append(s);}).catch(e=>{document.getElementById('preview-message').textContent='Không tải được trang phục: '+e.message;});
-window.alokBoot();
 </script>
 
 <!-- Export dependencies, MIT licenses:
